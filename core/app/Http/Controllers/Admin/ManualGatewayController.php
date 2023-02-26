@@ -176,8 +176,11 @@ class ManualGatewayController extends Controller
         $method = Gateway::where('code', $code)->firstOrFail();
         $method->status = 1;
         $method->save();
-        $notify[] = ['success', $method->name . ' enabled successfully'];
-        return back()->withNotify($notify);
+        // $notify[] = ['success', $method->name . ' enabled successfully'];
+        // return back()->withNotify($notify);
+
+        $notify = $method->name . ' enabled successfully!';
+        return response()->json(['msg'=>$notify, 'cls'=>'success']);
     }
 
     public function deactivate($code)
@@ -185,7 +188,10 @@ class ManualGatewayController extends Controller
         $method = Gateway::where('code', $code)->firstOrFail();
         $method->status = 0;
         $method->save();
-        $notify[] = ['success', $method->name . ' disabled successfully'];
-        return back()->withNotify($notify);
+        // $notify[] = ['success', $method->name . ' disabled successfully'];
+        // return back()->withNotify($notify);
+
+        $notify = $method->name . ' disabled successfully!';
+        return response()->json(['msg'=>$notify, 'cls'=>'error']);
     }
 }

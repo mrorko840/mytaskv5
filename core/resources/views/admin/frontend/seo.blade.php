@@ -5,7 +5,7 @@
         <div class="col-lg-12 col-md-12 mb-30">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('admin.frontend.sections.content', 'seo') }}" method="POST" enctype="multipart/form-data">
+                    <form id="seoForm" action="{{ route('admin.frontend.sections.content', 'seo') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="type" value="data">
                         <input type="hidden" name="seo_image" value="1">
@@ -67,6 +67,29 @@
 
 @endsection
 @push('script')
+
+    <script>
+        $(document).on('submit', '#seoForm', function (e) {
+            e.preventDefault();
+            // alert('Hello I am Hemel.')
+            let formData = new FormData($('#seoForm')[0])
+            $.ajax({
+                type: "POST",
+                url: "{{ route('admin.frontend.sections.content', 'seo') }}",
+                data: formData,
+                processData: false,
+                dataType: 'json',
+                contentType: false,
+                success: function (res) {
+                    console.log(res);
+                    notifyMsg(res.msg,res.cls)
+                }
+            });
+            
+        });
+    </script>
+
+
     <script>
         (function($) {
             "use strict";

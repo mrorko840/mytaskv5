@@ -140,8 +140,11 @@ class FrontendController extends Controller
         }
         $content->data_values = $inputContentValue;
         $content->save();
-        $notify[] = ['success', 'Content updated successfully'];
-        return back()->withNotify($notify);
+        // $notify[] = ['success', 'Content updated successfully'];
+        // return back()->withNotify($notify);
+
+        $notify = 'Content updated successfully!';
+        return response()->json(['msg'=>$notify, 'cls'=>'success']);
     }
 
 
@@ -197,8 +200,12 @@ class FrontendController extends Controller
             }
         }
         $frontend->delete();
-        $notify[] = ['success', 'Content removed successfully'];
-        return back()->withNotify($notify);
+
+        // $notify[] = ['success', 'Content removed successfully'];
+        // return back()->withNotify($notify);
+
+        $notify = 'Content removed successfully!';
+        return response()->json(['msg'=>$notify, 'cls'=>'error']);
     }
 
 

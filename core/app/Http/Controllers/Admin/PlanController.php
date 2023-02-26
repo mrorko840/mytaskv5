@@ -44,8 +44,11 @@ class PlanController extends Controller
         $plan->status = $request->status=='on'? 1 : 0;
         $plan->save();
 
-        $notify[] = ['success', 'Plan has been Updated Successfully.'];
+        // $notify[] = ['success', 'Plan has been Updated Successfully.'];
         // return back()->withNotify($notify);
-        return response()->json($notify);
+        // return response()->json($notify);
+
+        $notify = 'Plan has been Updated Successfully.';
+        return response()->json(['msg'=>$notify, 'cls'=>'success']);
     }
 }

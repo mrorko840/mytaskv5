@@ -145,8 +145,12 @@ class WithdrawMethodController extends Controller
         $method = WithdrawMethod::findOrFail($id);
         $method->status = 1;
         $method->save();
-        $notify[] = ['success', 'Withdraw method activated successfully'];
-        return to_route('admin.withdraw.method.index')->withNotify($notify);
+
+        // $notify[] = ['success', 'Withdraw method activated successfully'];
+        // return to_route('admin.withdraw.method.index')->withNotify($notify);
+
+        $notify = $method->name . ' activated successfully!';
+        return response()->json(['msg'=>$notify, 'cls'=>'success']);
     }
 
     public function deactivate($id)
@@ -154,8 +158,12 @@ class WithdrawMethodController extends Controller
         $method = WithdrawMethod::findOrFail($id);
         $method->status = 0;
         $method->save();
-        $notify[] = ['success', 'Withdraw method deactivated successfully'];
-        return to_route('admin.withdraw.method.index')->withNotify($notify);
+
+        // $notify[] = ['success', 'Withdraw method deactivated successfully'];
+        // return to_route('admin.withdraw.method.index')->withNotify($notify);
+
+        $notify = $method->name . ' diactivated successfully!';
+        return response()->json(['msg'=>$notify, 'cls'=>'error']);
     }
 
 }

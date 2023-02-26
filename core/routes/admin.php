@@ -59,14 +59,20 @@ Route::middleware('admin')->group(function () {
         Route::get('with-balance', 'usersWithBalance')->name('with.balance');
 
         Route::get('detail/{id}', 'detail')->name('detail');
+
         Route::get('kyc-data/{id}', 'kycDetails')->name('kyc.details');
         Route::post('kyc-approve/{id}', 'kycApprove')->name('kyc.approve');
         Route::post('kyc-reject/{id}', 'kycReject')->name('kyc.reject');
+
+        //update
         Route::post('update/{id}', 'update')->name('update');
+        //add-sub
         Route::post('add-sub-balance/{id}', 'addSubBalance')->name('add.sub.balance');
+
         Route::get('send-notification/{id}', 'showNotificationSingleForm')->name('notification.single');
         Route::post('send-notification/{id}', 'sendNotificationSingle')->name('notification.single');
         Route::get('login/{id}', 'login')->name('login');
+        //status
         Route::post('status/{id}', 'status')->name('status');
 
         Route::get('send-notification', 'showNotificationAllForm')->name('notification.all');
@@ -216,7 +222,7 @@ Route::middleware('admin')->group(function () {
 
         //configuration
         Route::get('setting/system-configuration', 'systemConfiguration')->name('setting.system.configuration');
-        Route::post('setting/system-configuration', 'systemConfigurationSubmit');
+        Route::post('setting/system-configuration', 'systemConfigurationSubmit')->name('setting.configuration.update');
 
         // Logo-Icon
         Route::get('setting/logo-icon', 'logoIcon')->name('setting.logo.icon');
@@ -232,7 +238,7 @@ Route::middleware('admin')->group(function () {
 
         //maintenance_mode
         Route::get('maintenance-mode', 'maintenanceMode')->name('maintenance.mode');
-        Route::post('maintenance-mode', 'maintenanceModeSubmit');
+        Route::post('maintenance-mode', 'maintenanceModeSubmit')->name('maintenance.mode.submit');
 
         //maintenance_mode
         Route::get('ads-setting', 'adsSetting')->name('setting.ads');

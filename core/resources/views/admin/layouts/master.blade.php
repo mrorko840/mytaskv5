@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ $general->siteName($pageTitle ?? '') }}</title>
+    <title class="pageTitle">{{ $general->siteName($pageTitle ?? '') }}</title>
     <link rel="shortcut icon" type="image/png" href="{{ getImage(getFilePath('logoIcon') . '/favicon.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/global/css/bootstrap.min.css') }}">
@@ -47,6 +47,7 @@
     <script src="{{ asset('assets/admin/js/vendor/prism.js') }}"></script>
     <script src="{{ asset('assets/admin/js/vendor/select2.min.js') }}"></script>
     <script src="{{ asset('assets/admin/js/app.js') }}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $.ajaxSetup({
             headers: {
@@ -55,6 +56,19 @@
         });
     </script>
     <script>
+
+        //-- Notify --//
+        const notifyMsg = (msg,cls) => {
+            Swal.fire({
+                position: 'top-end',
+                icon: cls,
+                title: msg,
+                toast:true,
+                showConfirmButton: false,
+                timer: 2100
+            })
+        }
+
         "use strict";
         bkLib.onDomLoaded(function() {
             $(".nicEdit").each(function(index) {

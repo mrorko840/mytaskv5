@@ -29,8 +29,11 @@ class ReferralController extends Controller
             @$general->$type = 1;
         }
         $general->save();
-        $notify[] = ['success', 'Referral commission status updated successfully'];
-        return back()->withNotify($notify);
+        // $notify[] = ['success', 'Referral commission status updated successfully'];
+        // return back()->withNotify($notify);
+
+        $notify = 'Referral commission status updated successfully!';
+        return response()->json(['msg'=>$notify, 'cls'=>'success']);
     }
 
     public function update(Request $request)
@@ -51,7 +54,10 @@ class ReferralController extends Controller
             $referral->save();
         }
 
-        $notify[] = ['success','Referral commission setting updated successfully'];
-        return back()->withNotify($notify);
+        // $notify[] = ['success','Referral commission setting updated successfully'];
+        // return back()->withNotify($notify);
+
+        $notify = 'Referral commission setting updated successfully!';
+        return response()->json(['msg'=>$notify, 'cls'=>'success']);
     }
 }

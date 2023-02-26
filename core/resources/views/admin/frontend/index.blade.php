@@ -5,7 +5,7 @@
             <div class="col-lg-12 col-md-12 mb-30">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('admin.frontend.sections.content', $key)}}" method="POST" enctype="multipart/form-data">
+                        <form class="frontendForm" action="{{ route('admin.frontend.sections.content', $key) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="type" value="content">
                             <div class="row">
@@ -134,90 +134,94 @@
                 <div class="card">
                     <div class="card-body p-0">
                         <div class="table-responsive--sm table-responsive">
-                            <table class="table table--light style--two custom-data-table">
-                                <thead>
-                                <tr>
-                                    <th>@lang('SL')</th>
-                                    @if(@$section->element->images)
-                                        <th>@lang('Image')</th>
-                                    @endif
-                                    @foreach($section->element as $k => $type)
-                                        @if($k !='modal')
-                                            @if($type=='text' || $type=='icon')
-                                                <th>{{ __(keyToTitle($k)) }}</th>
-                                            @elseif($k == 'select')
-                                                <th>{{keyToTitle(@$section->element->$k->name)}}</th>
-                                            @endif
-                                        @endif
-                                    @endforeach
-                                    <th>@lang('Action')</th>
-                                </tr>
-                                </thead>
-                                <tbody class="list">
-                                @forelse($elements as $data)
+                            <div id="tableContent">
+                                <table class="table table--light style--two custom-data-table">
+                                    <thead>
                                     <tr>
-                                        <td>{{$loop->iteration}}</td>
+                                        <th>@lang('SL')</th>
                                         @if(@$section->element->images)
-                                        @php $firstKey = collect($section->element->images)->keys()[0]; @endphp
-                                            <td>
-                                                <div class="customer-details d-block">
-                                                    <a href="javascript:void(0)" class="thumb">
-                                                        <img src="{{ getImage('assets/images/frontend/' . $key .'/'. @$data->data_values->$firstKey,@$section->element->images->$firstKey->size) }}" alt="@lang('image')">
-                                                    </a>
-                                                </div>
-                                            </td>
+                                            <th>@lang('Image')</th>
                                         @endif
                                         @foreach($section->element as $k => $type)
                                             @if($k !='modal')
-                                                @if($type == 'text' || $type == 'icon')
-                                                    @if($type == 'icon')
-                                                        <td>@php echo @$data->data_values->$k; @endphp</td>
-                                                    @else
-                                                        <td>{{__(@$data->data_values->$k)}}</td>
-                                                    @endif
+                                                @if($type=='text' || $type=='icon')
+                                                    <th>{{ __(keyToTitle($k)) }}</th>
                                                 @elseif($k == 'select')
-                                                    @php
-                                                        $dataVal = @$section->element->$k->name;
-                                                    @endphp
-                                                    <td>{{@$data->data_values->$dataVal}}</td>
+                                                    <th>{{keyToTitle(@$section->element->$k->name)}}</th>
                                                 @endif
                                             @endif
                                         @endforeach
-                                        <td>
-                                            <div class="button--group">
-                                                @if($section->element->modal)
-                                                @php
-                                                    $images = [];
-                                                    if(@$section->element->images){
-                                                        foreach($section->element->images as $imgKey => $imgs){
-                                                            $images[] = getImage('assets/images/frontend/' . $key .'/'. @$data->data_values->$imgKey,@$section->element->images->$imgKey->size);
-                                                        }
-                                                    }
-                                                @endphp
-                                                    <button class="btn btn-sm btn-outline--primary updateBtn"
-                                                        data-id="{{$data->id}}"
-                                                        data-all="{{json_encode($data->data_values)}}"
-                                                        @if(@$section->element->images)
-                                                            data-images="{{ json_encode($images) }}"
-                                                        @endif>
-                                                        <i class="la la-pencil-alt"></i> @lang('Edit')
-                                                    </button>
-                                                @else
-                                                    <a href="{{route('admin.frontend.sections.element',[$key,$data->id])}}" class="btn btn-sm btn-outline--primary"><i class="la la-pencil-alt"></i> @lang('Edit')</a>
+                                        <th>@lang('Action')</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="list">
+                                    @forelse($elements as $data)
+                                        <tr>
+                                            <td>{{$loop->iteration}}</td>
+                                            @if(@$section->element->images)
+                                            @php $firstKey = collect($section->element->images)->keys()[0]; @endphp
+                                                <td>
+                                                    <div class="customer-details d-block">
+                                                        <a href="javascript:void(0)" class="thumb">
+                                                            <img src="{{ getImage('assets/images/frontend/' . $key .'/'. @$data->data_values->$firstKey,@$section->element->images->$firstKey->size) }}" alt="@lang('image')">
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            @endif
+                                            @foreach($section->element as $k => $type)
+                                                @if($k !='modal')
+                                                    @if($type == 'text' || $type == 'icon')
+                                                        @if($type == 'icon')
+                                                            <td>@php echo @$data->data_values->$k; @endphp</td>
+                                                        @else
+                                                            <td>{{__(@$data->data_values->$k)}}</td>
+                                                        @endif
+                                                    @elseif($k == 'select')
+                                                        @php
+                                                            $dataVal = @$section->element->$k->name;
+                                                        @endphp
+                                                        <td>{{@$data->data_values->$dataVal}}</td>
+                                                    @endif
                                                 @endif
-                                                <button class="btn btn-sm btn-outline--danger confirmationBtn"
-                                                data-action="{{ route('admin.frontend.remove',$data->id) }}"
-                                                data-question="@lang('Are you sure to remove this item?')"><i class="la la-trash"></i> @lang('Remove')</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td class="text-muted text-center" colspan="100%">{{ __($emptyMessage) }}</td>
-                                    </tr>
-                                @endforelse
-                                </tbody>
-                            </table>
+                                            @endforeach
+                                            <td>
+                                                <div class="button--group">
+                                                    @if($section->element->modal)
+                                                    @php
+                                                        $images = [];
+                                                        if(@$section->element->images){
+                                                            foreach($section->element->images as $imgKey => $imgs){
+                                                                $images[] = getImage('assets/images/frontend/' . $key .'/'. @$data->data_values->$imgKey,@$section->element->images->$imgKey->size);
+                                                            }
+                                                        }
+                                                    @endphp
+                                                        <button class="btn btn-sm btn-outline--primary updateBtn"
+                                                            data-id="{{$data->id}}"
+                                                            data-all="{{json_encode($data->data_values)}}"
+                                                            @if(@$section->element->images)
+                                                                data-images="{{ json_encode($images) }}"
+                                                            @endif>
+                                                            <i class="la la-pencil-alt"></i> @lang('Edit')
+                                                        </button>
+                                                    @else
+                                                        <a href="{{route('admin.frontend.sections.element',[$key,$data->id])}}" class="btn btn-sm btn-outline--primary"><i class="la la-pencil-alt"></i> @lang('Edit')</a>
+                                                    @endif
+                                                    <button class="btn btn-sm btn-outline--danger confirmationBtn"
+                                                        data-action="{{ route('admin.frontend.remove',$data->id) }}"
+                                                        data-question="@lang('Are you sure to remove this item?')">
+                                                        <i class="la la-trash"></i> @lang('Remove')
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td class="text-muted text-center" colspan="100%">{{ __($emptyMessage) }}</td>
+                                        </tr>
+                                    @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -234,7 +238,7 @@
                             <i class="las la-times"></i>
                         </button>
                     </div>
-                    <form action="{{ route('admin.frontend.sections.content', $key) }}" method="POST" enctype="multipart/form-data">
+                    <form class="addfrontendForm" action="{{ route('admin.frontend.sections.content', $key) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="type" value="element">
                         <div class="modal-body">
@@ -325,7 +329,7 @@
                             <i class="las la-times"></i>
                         </button>
                     </div>
-                    <form action="{{ route('admin.frontend.sections.content', $key) }}" class="edit-route" method="POST" enctype="multipart/form-data">
+                    <form class="edit-route updatefrontendForm" action="{{ route('admin.frontend.sections.content', $key) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="type" value="element">
                         <input type="hidden" name="id">
@@ -425,7 +429,7 @@
 @endsection
 
 @push('style-lib')
-<link href="{{ asset('assets/admin/css/fontawesome-iconpicker.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/admin/css/fontawesome-iconpicker.min.css') }}" rel="stylesheet">
 @endpush
 
 @push('script-lib')
@@ -435,13 +439,96 @@
 @push('script')
 
     <script>
+        $(document).on('submit', '.frontendForm', function (e) {
+            e.preventDefault();
+            let formData = new FormData($('.frontendForm')[0])
+            $.ajax({
+                type: "POST",
+                url: "{{ route('admin.frontend.sections.content', $key) }}",
+                data: formData,
+                processData: false,
+                dataType: 'json',
+                contentType: false,
+                success: function (res) {
+                    console.log(res);
+                    notifyMsg(res.msg,res.cls)
+                }
+            });
+        });
+
+        //add
+        $(document).on('submit', '.addfrontendForm', function (e) {
+            e.preventDefault();
+            let formData = new FormData($('.addfrontendForm')[0])
+            $.ajax({
+                type: "POST",
+                url: "{{ route('admin.frontend.sections.content', $key) }}",
+                data: formData,
+                processData: false,
+                dataType: 'json',
+                contentType: false,
+                success: function (res) {
+                    console.log(res);
+                    $('#addModal').modal('hide');
+                    $('#tableContent').load(location.href+" #tableContent");
+                    $('.addfrontendForm')[0].reset();
+                    notifyMsg(res.msg,res.cls)
+                }
+            });
+        });
+
+        //update
+        $(document).on('submit', '.updatefrontendForm', function (e) {
+            e.preventDefault();
+            let formData = new FormData($('.updatefrontendForm')[0])
+            $.ajax({
+                type: "POST",
+                url: "{{ route('admin.frontend.sections.content', $key) }}",
+                data: formData,
+                processData: false,
+                dataType: 'json',
+                contentType: false,
+                success: function (res) {
+                    console.log(res);
+                    $('#updateBtn').modal('hide');
+                    $('#tableContent').load(location.href+" #tableContent");
+                    notifyMsg(res.msg,res.cls)
+                }
+            });
+        });
+
+        //delete
+        $(document).on('click', '.yes-confirm', function (e) {
+            e.preventDefault()
+            let formData = new FormData($('.yes-confirm-Form')[0])
+            let action = $('.yes-confirm-Form').attr('action');
+            console.log(action);
+            $.ajax({
+                type: "POST",
+                url: action,
+                data: formData,
+                processData: false,
+                dataType: 'json',
+                contentType: false,
+                success: function (res) {
+                    console.log(res);
+                    $('.confirmationModal').modal('hide');
+                    $('#tableContent').load(location.href+" #tableContent");
+                    notifyMsg(res.msg,res.cls)
+                }
+            });
+        });
+
+    </script>
+
+    <script>
         (function ($) {
             "use strict";
-            $('.addBtn').on('click', function () {
+            $(document).on('click', '.addBtn', function () {
                 var modal = $('#addModal');
                 modal.modal('show');
             });
-            $('.updateBtn').on('click', function () {
+            $(document).on('click', '.updateBtn', function () {
                 var modal = $('#updateBtn');
                 modal.find('input[name=id]').val($(this).data('id'));
                 var obj = $(this).data('all');
@@ -457,12 +544,13 @@
                 });
                 modal.modal('show');
             });
-            $('#updateBtn').on('shown.bs.modal', function (e) {
+            $(document).on('shown.bs.modal', '#updateBtn', function (e) {
                 $(document).off('focusin.modal');
             });
-            $('#addModal').on('shown.bs.modal', function (e) {
+            $(document).on('shown.bs.modal', '#addModal', function (e) {
                 $(document).off('focusin.modal');
             });
+
             $('.iconPicker').iconpicker().on('iconpickerSelected', function (e) {
                 $(this).closest('.form-group').find('.iconpicker-input').val(`<i class="${e.iconpickerValue}"></i>`);
             });

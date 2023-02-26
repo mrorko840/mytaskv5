@@ -4,7 +4,7 @@
         <div class="col-md-12 mb-30">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('admin.frontend.sections.content', $key) }}" method="POST" enctype="multipart/form-data">
+                    <form id="contentForm" action="{{ route('admin.frontend.sections.content', $key) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="type" value="element">
                         @if(@$data)
@@ -133,6 +133,26 @@
 @endpush
 
 @push('script')
+
+    <script>
+        $(document).on('submit', '#contentForm', function (e) {
+            e.preventDefault();
+            let formData = new FormData($('#contentForm')[0])
+            $.ajax({
+                type: "POST",
+                url: "{{ route('admin.frontend.sections.content', $key) }}",
+                data: formData,
+                processData: false,
+                dataType: 'json',
+                contentType: false,
+                success: function (res) {
+                    console.log(res);
+                    notifyMsg(res.msg,res.cls)
+                }
+            });
+        });
+    </script>
+
     <script>
 
         (function ($) {

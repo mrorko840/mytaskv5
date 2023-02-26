@@ -5,62 +5,64 @@
             <div class="card b-radius--10 ">
                 <div class="card-body p-0">
                     <div class="table-responsive--sm table-responsive">
-                        <table class="table table--light style--two custom-data-table">
-                            <thead>
-                                <tr>
-                                    <th>@lang('Method')</th>
-                                    <th>@lang('Currency')</th>
-                                    <th>@lang('Charge')</th>
-                                    <th>@lang('Withdraw Limit')</th>
-                                    <th>@lang('Status')</th>
-                                    <th>@lang('Action')</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            @forelse($methods as $method)
-                                <tr>
-                                    <td data-label="@lang('Method')">
-                                        <div class="user">
-                                            <div class="thumb"><img src="{{ getImage(imagePath()['gateway']['path'].'/'. $method->image,imagePath()['gateway']['size'])}}" alt="@lang('image')"></div>
-                                            <span class="name">{{__($method->name)}}</span>
-                                        </div>
-                                    </td>
-
-                                    <td class="fw-bold">{{ __($method->currency) }}</td>
-                                    <td class="fw-bold">{{ showAmount($method->fixed_charge)}} {{__($general->cur_text) }} {{ (0 < $method->percent_charge) ? ' + '. showAmount($method->percent_charge) .' %' : '' }} </td>
-                                    <td class="fw-bold">{{ $method->min_limit + 0 }}
-                                        - {{ $method->max_limit + 0 }} {{__($general->cur_text) }}</td>
-                                    <td>
-                                        @if($method->status == 1)
-                                            <span class="text--small badge font-weight-normal badge--success">@lang('Active')</span>
-                                        @else
-                                            <span class="text--small badge font-weight-normal badge--warning">@lang('Disabled')</span>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <div class="button--group">
-                                            <a href="{{ route('admin.withdraw.method.edit', $method->id)}}"
-                                               class="btn btn-sm btn-outline--primary ms-1"><i class="las la-pen"></i> @lang('Edit')</a>
+                        <div id="tableContent">
+                            <table class="table table--light style--two custom-data-table">
+                                <thead>
+                                    <tr>
+                                        <th>@lang('Method')</th>
+                                        <th>@lang('Currency')</th>
+                                        <th>@lang('Charge')</th>
+                                        <th>@lang('Withdraw Limit')</th>
+                                        <th>@lang('Status')</th>
+                                        <th>@lang('Action')</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                @forelse($methods as $method)
+                                    <tr>
+                                        <td data-label="@lang('Method')">
+                                            <div class="user">
+                                                <div class="thumb"><img src="{{ getImage(imagePath()['gateway']['path'].'/'. $method->image,imagePath()['gateway']['size'])}}" alt="@lang('image')"></div>
+                                                <span class="name">{{__($method->name)}}</span>
+                                            </div>
+                                        </td>
+    
+                                        <td class="fw-bold">{{ __($method->currency) }}</td>
+                                        <td class="fw-bold">{{ showAmount($method->fixed_charge)}} {{__($general->cur_text) }} {{ (0 < $method->percent_charge) ? ' + '. showAmount($method->percent_charge) .' %' : '' }} </td>
+                                        <td class="fw-bold">{{ $method->min_limit + 0 }}
+                                            - {{ $method->max_limit + 0 }} {{__($general->cur_text) }}</td>
+                                        <td>
                                             @if($method->status == 1)
-                                                <button class="btn btn-sm btn-outline--danger ms-1 confirmationBtn" data-question="@lang('Are you sure to disable this method?')" data-action="{{ route('admin.withdraw.method.deactivate',$method->id) }}">
-                                                    <i class="la la-eye-slash"></i> @lang('Disable')
-                                                </button>
+                                                <span class="text--small badge font-weight-normal badge--success">@lang('Active')</span>
                                             @else
-                                                <button class="btn btn-sm btn-outline--success ms-1 confirmationBtn" data-question="@lang('Are you sure to enable this method?')" data-action="{{ route('admin.withdraw.method.activate',$method->id) }}">
-                                                    <i class="la la-eye"></i> @lang('Enable')
-                                                </button>
+                                                <span class="text--small badge font-weight-normal badge--warning">@lang('Disabled')</span>
                                             @endif
-                                        </div>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td class="text-muted text-center" colspan="100%">{{ __($emptyMessage) }}</td>
-                                </tr>
-                            @endforelse
-
-                            </tbody>
-                        </table><!-- table end -->
+                                        </td>
+                                        <td>
+                                            <div class="button--group">
+                                                <a href="{{ route('admin.withdraw.method.edit', $method->id)}}"
+                                                   class="btn btn-sm btn-outline--primary ms-1"><i class="las la-pen"></i> @lang('Edit')</a>
+                                                @if($method->status == 1)
+                                                    <button class="btn btn-sm btn-outline--danger ms-1 confirmationBtn" data-question="@lang('Are you sure to disable this method?')" data-action="{{ route('admin.withdraw.method.deactivate',$method->id) }}">
+                                                        <i class="la la-eye-slash"></i> @lang('Disable')
+                                                    </button>
+                                                @else
+                                                    <button class="btn btn-sm btn-outline--success ms-1 confirmationBtn" data-question="@lang('Are you sure to enable this method?')" data-action="{{ route('admin.withdraw.method.activate',$method->id) }}">
+                                                        <i class="la la-eye"></i> @lang('Enable')
+                                                    </button>
+                                                @endif
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td class="text-muted text-center" colspan="100%">{{ __($emptyMessage) }}</td>
+                                    </tr>
+                                @endforelse
+    
+                                </tbody>
+                            </table><!-- table end -->
+                        </div>
                     </div>
                 </div>
             </div><!-- card end -->
@@ -69,7 +71,31 @@
     <x-confirmation-modal></x-confirmation-modal>
 @endsection
 
-
+@push('script')
+    <script>
+         // active & deactive
+         $(document).on('click', '.yes-confirm', function (e) {
+            e.preventDefault()
+            let formData = new FormData($('.yes-confirm-Form')[0])
+            let action = $('.yes-confirm-Form').attr('action');
+            console.log(action);
+            $.ajax({
+                type: "POST",
+                url: action,
+                data: formData,
+                processData: false,
+                dataType: 'json',
+                contentType: false,
+                success: function (res) {
+                    console.log(res);
+                    $('.confirmationModal').modal('hide');
+                    $('#tableContent').load(location.href+" #tableContent");
+                    notifyMsg(res.msg,res.cls);
+                }
+            });
+        });
+    </script>
+@endpush
 
 @push('breadcrumb-plugins')
 
@@ -83,3 +109,5 @@
         </div>
     </div>
 @endpush
+
+

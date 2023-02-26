@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-                <form action="" method="post">
+                <form id="configForm" action="" method="post">
                     @csrf
                     <div class="card-body">
                         <ul class="list-group">
@@ -15,7 +15,7 @@
                                     </p>
                                 </div>
                                 <div class="form-group">
-                                    <input type="checkbox" data-width="100%" data-size="large" data-onstyle="-success" data-offstyle="-danger" data-bs-toggle="toggle" data-height="35" data-on="@lang('Enable')" data-off="@lang('Disable')" name="balance_transfer" @if ($general->balance_transfer) checked @endif>
+                                    <input class="configItem" type="checkbox" data-width="100%" data-size="large" data-onstyle="-success" data-offstyle="-danger" data-bs-toggle="toggle" data-height="35" data-on="@lang('Enable')" data-off="@lang('Disable')" name="balance_transfer" @if ($general->balance_transfer) checked @endif>
                                 </div>
                             </li>
                             <li class="list-group-item d-flex flex-wrap flex-sm-nowrap gap-2 justify-content-between align-items-center">
@@ -26,7 +26,7 @@
                                     </p>
                                 </div>
                                 <div class="form-group">
-                                    <input type="checkbox" data-width="100%" data-size="large" data-onstyle="-success" data-offstyle="-danger" data-bs-toggle="toggle" data-height="35" data-on="@lang('Enable')" data-off="@lang('Disable')" name="registration" @if ($general->registration) checked @endif>
+                                    <input class="configItem" type="checkbox" data-width="100%" data-size="large" data-onstyle="-success" data-offstyle="-danger" data-bs-toggle="toggle" data-height="35" data-on="@lang('Enable')" data-off="@lang('Disable')" name="registration" @if ($general->registration) checked @endif>
                                 </div>
                             </li>
                             <li class="list-group-item d-flex flex-wrap flex-sm-nowrap gap-2 justify-content-between align-items-center">
@@ -37,7 +37,7 @@
                                     </p>
                                 </div>
                                 <div class="form-group">
-                                    <input type="checkbox" data-width="100%" data-size="large" data-onstyle="-success" data-offstyle="-danger" data-bs-toggle="toggle" data-height="35" data-on="@lang('Enable')" data-off="@lang('Disable')" name="force_ssl" @if ($general->force_ssl) checked @endif>
+                                    <input class="configItem" type="checkbox" data-width="100%" data-size="large" data-onstyle="-success" data-offstyle="-danger" data-bs-toggle="toggle" data-height="35" data-on="@lang('Enable')" data-off="@lang('Disable')" name="force_ssl" @if ($general->force_ssl) checked @endif>
                                 </div>
                             </li>
                             <li class="list-group-item d-flex flex-wrap flex-sm-nowrap gap-2 justify-content-between align-items-center">
@@ -48,7 +48,7 @@
                                     </p>
                                 </div>
                                 <div class="form-group">
-                                    <input type="checkbox" data-width="100%" data-size="large" data-onstyle="-success" data-offstyle="-danger" data-bs-toggle="toggle" data-height="35" data-on="@lang('Enable')" data-off="@lang('Disable')" name="agree" @if ($general->agree) checked @endif>
+                                    <input class="configItem" type="checkbox" data-width="100%" data-size="large" data-onstyle="-success" data-offstyle="-danger" data-bs-toggle="toggle" data-height="35" data-on="@lang('Enable')" data-off="@lang('Disable')" name="agree" @if ($general->agree) checked @endif>
                                 </div>
                             </li>
 
@@ -60,7 +60,7 @@
                                     </p>
                                 </div>
                                 <div class="form-group">
-                                    <input type="checkbox" data-width="100%" data-size="large" data-onstyle="-success" data-offstyle="-danger" data-bs-toggle="toggle" data-height="35" data-on="@lang('Enable')" data-off="@lang('Disable')" name="secure_password" @if ($general->secure_password) checked @endif>
+                                    <input class="configItem" type="checkbox" data-width="100%" data-size="large" data-onstyle="-success" data-offstyle="-danger" data-bs-toggle="toggle" data-height="35" data-on="@lang('Enable')" data-off="@lang('Disable')" name="secure_password" @if ($general->secure_password) checked @endif>
                                 </div>
                             </li>
 
@@ -72,7 +72,7 @@
                                     </p>
                                 </div>
                                 <div class="form-group">
-                                    <input type="checkbox" data-width="100%" data-size="large" data-onstyle="-success" data-offstyle="-danger" data-bs-toggle="toggle" data-height="35" data-on="@lang('Enable')" data-off="@lang('Disable')" name="kv" @if ($general->kv) checked @endif>
+                                    <input class="configItem" type="checkbox" data-width="100%" data-size="large" data-onstyle="-success" data-offstyle="-danger" data-bs-toggle="toggle" data-height="35" data-on="@lang('Enable')" data-off="@lang('Disable')" name="kv" @if ($general->kv) checked @endif>
                                 </div>
                             </li>
 
@@ -88,7 +88,7 @@
                                     </p>
                                 </div>
                                 <div class="form-group">
-                                    <input type="checkbox" data-width="100%" data-size="large" data-onstyle="-success" data-offstyle="-danger" data-bs-toggle="toggle" data-height="35" data-on="@lang('Enable')" data-off="@lang('Disable')" name="ev" @if ($general->ev) checked @endif>
+                                    <input class="configItem" type="checkbox" data-width="100%" data-size="large" data-onstyle="-success" data-offstyle="-danger" data-bs-toggle="toggle" data-height="35" data-on="@lang('Enable')" data-off="@lang('Disable')" name="ev" @if ($general->ev) checked @endif>
                                 </div>
                             </li>
 
@@ -100,7 +100,7 @@
                                     </p>
                                 </div>
                                 <div class="form-group">
-                                    <input type="checkbox" data-width="100%" data-size="large" data-onstyle="-success" data-offstyle="-danger" data-bs-toggle="toggle" data-height="35" data-on="@lang('Enable')" data-off="@lang('Disable')" name="en" @if ($general->en) checked @endif>
+                                    <input class="configItem" type="checkbox" data-width="100%" data-size="large" data-onstyle="-success" data-offstyle="-danger" data-bs-toggle="toggle" data-height="35" data-on="@lang('Enable')" data-off="@lang('Disable')" name="en" @if ($general->en) checked @endif>
                                 </div>
                             </li>
 
@@ -116,7 +116,7 @@
                                     </p>
                                 </div>
                                 <div class="form-group">
-                                    <input type="checkbox" data-width="100%" data-size="large" data-onstyle="-success" data-offstyle="-danger" data-bs-toggle="toggle" data-height="35" data-on="@lang('Enable')" data-off="@lang('Disable')" name="sv" @if ($general->sv) checked @endif>
+                                    <input class="configItem" type="checkbox" data-width="100%" data-size="large" data-onstyle="-success" data-offstyle="-danger" data-bs-toggle="toggle" data-height="35" data-on="@lang('Enable')" data-off="@lang('Disable')" name="sv" @if ($general->sv) checked @endif>
                                 </div>
                             </li>
 
@@ -129,14 +129,14 @@
                                     </p>
                                 </div>
                                 <div class="form-group">
-                                    <input type="checkbox" data-width="100%" data-size="large" data-onstyle="-success" data-offstyle="-danger" data-bs-toggle="toggle" data-height="35" data-on="@lang('Enable')" data-off="@lang('Disable')" name="sn" @if ($general->sn) checked @endif>
+                                    <input class="configItem" type="checkbox" data-width="100%" data-size="large" data-onstyle="-success" data-offstyle="-danger" data-bs-toggle="toggle" data-height="35" data-on="@lang('Enable')" data-off="@lang('Disable')" name="sn" @if ($general->sn) checked @endif>
                                 </div>
                             </li>
                         </ul>
                     </div>
-                    <div class="card-footer">
+                    {{-- <div class="card-footer">
                         <button type="submit" class="btn btn--primary w-100 h-45">@lang('Submit')</button>
-                    </div>
+                    </div> --}}
                 </form>
             </div>
         </div>
@@ -161,4 +161,27 @@
             flex-shrink: 0
         }
     </style>
+@endpush
+
+@push('script')
+    <script>
+        $(document).on('change', '.configItem', function (e) {
+            e.preventDefault();
+            let formData = new FormData($('#configForm')[0])
+            $.ajax({
+                type: "POST",
+                url: "{{route('admin.setting.configuration.update')}}",
+                data: formData,
+                dataType: "json",
+                processData: false,
+                dataType: 'json',
+                contentType: false,
+                success: function (res) {
+                    console.log(res);
+                    notifyMsg(res.msg,res.cls)
+                }
+            });
+            
+        });
+    </script>
 @endpush

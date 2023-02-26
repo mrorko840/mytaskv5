@@ -1,57 +1,59 @@
 @extends('admin.layouts.app')
 @section('panel')
-<div class="row">
-    @foreach($commissionTypes as $key => $type)
-    <div class="col-lg-4 mb-4">
-        <div class="card border--primary parent">
-            <div class="card-header bg--primary">
-                <h5 class="text-white float-start">{{ __($type) }}</h5>
-                @if($general->$key == 0)
-                <a href="{{ route('admin.referrals.status',$key) }}" class="btn btn--success btn-sm float-end"><i class="las la-toggle-on"></i> @lang('Enable Now')</a>
-                @else
-                <a href="{{ route('admin.referrals.status',$key) }}" class="btn btn--danger btn-sm float-end"><i class="las la-toggle-off"></i> @lang('Disable Now')</a>
-                @endif
-            </div>
-
-            <div class="card-body">
-
-                <ul class="list-group list-group-flush">
-                @foreach($referrals->where('commission_type',$key) as $referral)
-                    <li class="list-group-item d-flex flex-wrap justify-content-between">
-                        <span class="fw-bold">@lang('Level') {{ $referral->level }}</span>
-                        <span class="fw-bold">{{ $referral->percent }}%</span>
-                    </li>
-                @endforeach
-                </ul>
-
-
-                <div class="border-line-area mt-3">
-                    <h6 class="border-line-title">@lang('Update Setting')</h6>
-                </div>
-
-                <div class="form-group">
-                    <label>@lang('Number of Level')</label>
-                    <div class="input-group">
-                        <input type="number" name="level" min="1" placeholder="Type a number & hit ENTER ↵" class="form-control">
-                        <button type="button" class="btn btn--primary generate">@lang('Generate')</button>
+<div id="referBody">
+    <div class="row">
+        @foreach($commissionTypes as $key => $type)
+            <div class="col-lg-4 mb-4">
+                <div class="card border--primary parent">
+                    <div class="card-header bg--primary">
+                        <h6 class="text-white float-start">{{ __($type) }}</h6>
+                        @if($general->$key == 0)
+                        <a href="{{ route('admin.referrals.status',$key) }}" class="btn btn--success btn-sm float-end on-off-refer"><i class="las la-toggle-on"></i> @lang('Enable Now')</a>
+                        @else
+                        <a href="{{ route('admin.referrals.status',$key) }}" class="btn btn--danger btn-sm float-end on-off-refer"><i class="las la-toggle-off"></i> @lang('Disable Now')</a>
+                        @endif
                     </div>
-                    <span class="text--danger required-message d-none">@lang('Please enter a number')</span>
-                </div>
-
-                <form action="{{ route('admin.referrals.update') }}" method="post" class="d-none levelForm">
-                    @csrf
-                    <input type="hidden" name="commission_type" value="{{ $key  }}">
-                        <h6 class="text--danger mb-3">@lang('The Old setting will be removed after generating new')</h6>
-                        <div class="form-group">
-                            <div class="referralLevels"></div>
+        
+                    <div class="card-body">
+        
+                        <ul class="list-group list-group-flush">
+                        @foreach($referrals->where('commission_type',$key) as $referral)
+                            <li class="list-group-item d-flex flex-wrap justify-content-between">
+                                <span class="fw-bold">@lang('Level') {{ $referral->level }}</span>
+                                <span class="fw-bold">{{ $referral->percent }}%</span>
+                            </li>
+                        @endforeach
+                        </ul>
+        
+        
+                        <div class="border-line-area mt-3">
+                            <h6 class="border-line-title">@lang('Update Setting')</h6>
                         </div>
-                    <button type="submit" class="btn btn--primary h-45 w-100">@lang('Submit')</button>
-                </form>
-
+        
+                        <div class="form-group">
+                            <label>@lang('Number of Level')</label>
+                            <div class="input-group">
+                                <input type="number" name="level" min="1" placeholder="Type a number & hit ENTER ↵" class="form-control">
+                                <button type="button" class="btn btn--primary generate">@lang('Generate')</button>
+                            </div>
+                            <span class="text--danger required-message d-none">@lang('Please enter a number')</span>
+                        </div>
+        
+                        <form class="referForm" action="{{ route('admin.referrals.update') }}" method="post" class="d-none levelForm">
+                            @csrf
+                            <input type="hidden" name="commission_type" value="{{ $key  }}">
+                                <h6 class="text--danger mb-3">@lang('The Old setting will be removed after generating new')</h6>
+                                <div class="form-group">
+                                    <div class="referralLevels"></div>
+                                </div>
+                            <button type="submit" class="btn btn--primary h-45 w-100">@lang('Submit')</button>
+                        </form>
+        
+                    </div>
+                </div>
             </div>
-        </div>
+        @endforeach
     </div>
-    @endforeach
 </div>
 @endsection
 @push('style')
@@ -80,6 +82,48 @@
     </style>
 @endpush
 @push('script')
+
+    <script>
+        //on-off
+        $(document).on('click', '.on-off-refer', function (e) {
+            e.preventDefault();
+            // alert()
+            let action = $(this).attr('href');
+            // console.log(action);
+            $.ajax({
+                type: "GET",
+                url: action,
+                success: function (res) {
+                    console.log(res);
+                    $('#referBody').load(location.href+" #referBody");
+                    notifyMsg(res.msg,res.cls);
+                }
+            });
+            
+        });
+
+        //submit
+        $(document).on('submit', '.referForm', function (e) {
+            e.preventDefault();
+            // alert()
+            let formData = new FormData($('.referForm')[0]);
+            $.ajax({
+                type: "POST",
+                url: "{{ route('admin.referrals.update') }}",
+                data: formData,
+                processData: false,
+                dataType: "json",
+                contentType: false,
+                success: function (res) {
+                    console.log(res);
+                    $('#referBody').load(location.href+" #referBody");
+                    notifyMsg(res.msg,res.cls);
+                }
+            });
+        });
+    </script>
+
+
     <script>
     (function($){
         "use strict"
@@ -92,7 +136,7 @@
             });
         });
 
-        $(".generate").on('click', function () {
+        $(document).on('click', ".generate", function () {
             let $this = $(this).parents('.card-body').find('[name="level"]');
             generrateLevels($this);
         });

@@ -3,64 +3,66 @@
 @section('panel')
     <div class="row">
         <div class="col-12">
-            <div class="row gy-4">
-
-                <div class="col-xxl-3 col-sm-6">
-                    <div class="widget-two style--two box--shadow2 b-radius--5 bg--19">
-                        <div class="widget-two__icon b-radius--5 bg--primary">
-                            <i class="las la-money-bill-wave-alt"></i>
+            <div id="userInfoBody">
+                <div class="row gy-4">
+    
+                    <div class="col-xxl-3 col-sm-6">
+                        <div class="widget-two style--two box--shadow2 b-radius--5 bg--19">
+                            <div class="widget-two__icon b-radius--5 bg--primary">
+                                <i class="las la-money-bill-wave-alt"></i>
+                            </div>
+                            <div class="widget-two__content">
+                                <h3 class="text-white">{{ $general->cur_sym }}{{ showAmount($user->balance) }}</h3>
+                                <p class="text-white">@lang('Balance')</p>
+                            </div>
+                            <a href="{{ route('admin.report.transaction') }}?search={{ $user->username }}" class="widget-two__btn">@lang('View All')</a>
                         </div>
-                        <div class="widget-two__content">
-                            <h3 class="text-white">{{ $general->cur_sym }}{{ showAmount($user->balance) }}</h3>
-                            <p class="text-white">@lang('Balance')</p>
-                        </div>
-                        <a href="{{ route('admin.report.transaction') }}?search={{ $user->username }}" class="widget-two__btn">@lang('View All')</a>
                     </div>
-                </div>
-                <!-- dashboard-w1 end -->
-
-                <div class="col-xxl-3 col-sm-6">
-                    <div class="widget-two style--two box--shadow2 b-radius--5 bg--primary">
-                        <div class="widget-two__icon b-radius--5 bg--primary">
-                            <i class="las la-wallet"></i>
+                    <!-- dashboard-w1 end -->
+    
+                    <div class="col-xxl-3 col-sm-6">
+                        <div class="widget-two style--two box--shadow2 b-radius--5 bg--primary">
+                            <div class="widget-two__icon b-radius--5 bg--primary">
+                                <i class="las la-wallet"></i>
+                            </div>
+                            <div class="widget-two__content">
+                                <h3 class="text-white">{{ $general->cur_sym }}{{ showAmount($totalDeposit) }}</h3>
+                                <p class="text-white">@lang('Deposits')</p>
+                            </div>
+                            <a href="{{ route('admin.deposit.list') }}?search={{ $user->username }}" class="widget-two__btn">@lang('View All')</a>
                         </div>
-                        <div class="widget-two__content">
-                            <h3 class="text-white">{{ $general->cur_sym }}{{ showAmount($totalDeposit) }}</h3>
-                            <p class="text-white">@lang('Deposits')</p>
-                        </div>
-                        <a href="{{ route('admin.deposit.list') }}?search={{ $user->username }}" class="widget-two__btn">@lang('View All')</a>
                     </div>
-                </div>
-                <!-- dashboard-w1 end -->
-
-                <div class="col-xxl-3 col-sm-6">
-                    <div class="widget-two style--two box--shadow2 b-radius--5 bg--1">
-                        <div class="widget-two__icon b-radius--5 bg--primary">
-                            <i class="fas fa-wallet"></i>
+                    <!-- dashboard-w1 end -->
+    
+                    <div class="col-xxl-3 col-sm-6">
+                        <div class="widget-two style--two box--shadow2 b-radius--5 bg--1">
+                            <div class="widget-two__icon b-radius--5 bg--primary">
+                                <i class="fas fa-wallet"></i>
+                            </div>
+                            <div class="widget-two__content">
+                                <h3 class="text-white">{{ $general->cur_sym }}{{ showAmount($totalWithdrawals) }}</h3>
+                                <p class="text-white">@lang('Withdrawals')</p>
+                            </div>
+                            <a href="{{ route('admin.withdraw.log') }}?search={{ $user->username }}" class="widget-two__btn">@lang('View All')</a>
                         </div>
-                        <div class="widget-two__content">
-                            <h3 class="text-white">{{ $general->cur_sym }}{{ showAmount($totalWithdrawals) }}</h3>
-                            <p class="text-white">@lang('Withdrawals')</p>
-                        </div>
-                        <a href="{{ route('admin.withdraw.log') }}?search={{ $user->username }}" class="widget-two__btn">@lang('View All')</a>
                     </div>
-                </div>
-                <!-- dashboard-w1 end -->
-
-                <div class="col-xxl-3 col-sm-6">
-                    <div class="widget-two style--two box--shadow2 b-radius--5 bg--17">
-                        <div class="widget-two__icon b-radius--5 bg--primary">
-                            <i class="las la-exchange-alt"></i>
+                    <!-- dashboard-w1 end -->
+    
+                    <div class="col-xxl-3 col-sm-6">
+                        <div class="widget-two style--two box--shadow2 b-radius--5 bg--17">
+                            <div class="widget-two__icon b-radius--5 bg--primary">
+                                <i class="las la-exchange-alt"></i>
+                            </div>
+                            <div class="widget-two__content">
+                                <h3 class="text-white">{{ $totalTransaction }}</h3>
+                                <p class="text-white">@lang('Transactions')</p>
+                            </div>
+                            <a href="{{ route('admin.report.transaction') }}?search={{ $user->username }}" class="widget-two__btn">@lang('View All')</a>
                         </div>
-                        <div class="widget-two__content">
-                            <h3 class="text-white">{{ $totalTransaction }}</h3>
-                            <p class="text-white">@lang('Transactions')</p>
-                        </div>
-                        <a href="{{ route('admin.report.transaction') }}?search={{ $user->username }}" class="widget-two__btn">@lang('View All')</a>
                     </div>
+                    <!-- dashboard-w1 end -->
+    
                 </div>
-                <!-- dashboard-w1 end -->
-
             </div>
 
             <div class="d-flex flex-wrap gap-3 mt-4">
@@ -103,16 +105,19 @@
                 @endif
 
                 <div class="flex-fill">
-                    @if($user->status == 1)
-                    <button type="button" class="btn btn--warning btn--gradi btn--shadow w-100 btn-lg userStatus" data-bs-toggle="modal" data-bs-target="#userStatusModal">
-                        <i class="las la-ban"></i>@lang('Ban User')
-                    </button>
-                    @else
-                    <button type="button" class="btn btn--success btn--gradi btn--shadow w-100 btn-lg userStatus" data-bs-toggle="modal" data-bs-target="#userStatusModal">
-                        <i class="las la-undo"></i>@lang('Unban User')
-                    </button>
-                    @endif
+                    <div id="banUnbanBtn">
+                        @if($user->status == 1)
+                        <button type="button" class="btn btn--warning btn--gradi btn--shadow w-100 btn-lg userStatus" data-bs-toggle="modal" data-bs-target="#userStatusModal">
+                            <i class="las la-ban"></i>@lang('Ban User')
+                        </button>
+                        @else
+                        <button type="button" class="btn btn--success btn--gradi btn--shadow w-100 btn-lg userStatus" data-bs-toggle="modal" data-bs-target="#userStatusModal">
+                            <i class="las la-undo"></i>@lang('Unban User')
+                        </button>
+                        @endif
+                    </div>
                 </div>
+
             </div>
 
 
@@ -121,7 +126,7 @@
                     <h5 class="card-title mb-0">@lang('Information of') {{$user->fullname}}</h5>
                 </div>
                 <div class="card-body">
-                    <form action="{{route('admin.users.update',[$user->id])}}" method="POST"
+                    <form id="userInfoForm" action="{{route('admin.users.update',[$user->id])}}" method="POST"
                           enctype="multipart/form-data">
                         @csrf
 
@@ -258,7 +263,7 @@
                         <i class="las la-times"></i>
                     </button>
                 </div>
-                <form action="{{route('admin.users.add.sub.balance',$user->id)}}" method="POST">
+                <form id="addsubForm" action="{{route('admin.users.add.sub.balance',$user->id)}}" method="POST">
                     @csrf
                     <input type="hidden" name="act">
                     <div class="modal-body">
@@ -282,53 +287,126 @@
         </div>
     </div>
 
-
-    <div id="userStatusModal" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">
-                        @if($user->status == 1)
-                        <span>@lang('Ban User')</span>
-                        @else
-                        <span>@lang('Unban User')</span>
-                        @endif
-                    </h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <i class="las la-times"></i>
-                    </button>
-                </div>
-                <form action="{{route('admin.users.status',$user->id)}}" method="POST">
-                    @csrf
-                    <div class="modal-body">
-                        @if($user->status == 1)
-                        <h6 class="mb-2">@lang('If you ban this user he/she won\'t able to access his/her dashboard.')</h6>
-                        <div class="form-group">
-                            <label>@lang('Reason')</label>
-                            <textarea class="form-control" name="reason" rows="4" required></textarea>
+    {{-- user status MODAL --}}
+    <div id="banUnbanBody">
+        <div id="userStatusModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            @if($user->status == 1)
+                            <span>@lang('Ban User')</span>
+                            @else
+                            <span>@lang('Unban User')</span>
+                            @endif
+                        </h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <i class="las la-times"></i>
+                        </button>
+                    </div>
+                    <form id="statusForm" action="{{route('admin.users.status',$user->id)}}" method="POST">
+                        @csrf
+                        <div class="modal-body">
+                            @if($user->status == 1)
+                            <h6 class="mb-2">@lang('If you ban this user he/she won\'t able to access his/her dashboard.')</h6>
+                            <div class="form-group">
+                                <label>@lang('Reason')</label>
+                                <textarea class="form-control" name="reason" rows="4" required></textarea>
+                            </div>
+                            @else
+                            <p><span>@lang('Ban reason was'):</span></p>
+                            <p>{{ $user->ban_reason }}</p>
+                            <h4 class="text-center mt-3">@lang('Are you sure to unban this user?')</h4>
+                            @endif
                         </div>
-                        @else
-                        <p><span>@lang('Ban reason was'):</span></p>
-                        <p>{{ $user->ban_reason }}</p>
-                        <h4 class="text-center mt-3">@lang('Are you sure to unban this user?')</h4>
-                        @endif
-                    </div>
-                    <div class="modal-footer">
-                        @if($user->status == 1)
-                        <button type="submit" class="btn btn--primary h-45 w-100">@lang('Submit')</button>
-                        @else
-                        <button type="button" class="btn btn--dark" data-bs-dismiss="modal">@lang('No')</button>
-                        <button type="submit" class="btn btn--primary">@lang('Yes')</button>
-                        @endif
-                    </div>
-                </form>
+                        <div class="modal-footer">
+                            @if($user->status == 1)
+                            <button type="submit" class="btn btn--primary h-45 w-100">@lang('Submit')</button>
+                            @else
+                            <button type="button" class="btn btn--dark" data-bs-dismiss="modal">@lang('No')</button>
+                            <button type="submit" class="btn btn--primary">@lang('Yes')</button>
+                            @endif
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
+
 @endsection
 
 
 @push('script')
+<script>
+    //user info update//
+    $(document).on('submit', '#userInfoForm', function (e) {
+        e.preventDefault();
+        let formData = new FormData($('#userInfoForm')[0]);
+
+        $.ajax({
+            type: "POST",
+            url: "{{route('admin.users.update',[$user->id])}}",
+            data: formData,
+            processData: false,
+            dataType: 'json',
+            contentType: false,
+            success: function (res) {
+                console.log(res);
+                notifyMsg(res.msg,res.cls)
+            }
+        });
+        
+    });
+
+    //add-sub-balance//
+    $(document).on('submit', '#addsubForm', function (e) {
+        e.preventDefault();
+        let formData = new FormData($('#addsubForm')[0]);
+
+        $.ajax({
+            type: "POST",
+            url: "{{route('admin.users.add.sub.balance',$user->id)}}",
+            data: formData,
+            processData: false,
+            dataType: 'json',
+            contentType: false,
+            success: function (res) {
+                console.log(res);
+                $('#addsubForm')[0].reset();
+                $('#userInfoBody').load(location.href+' #userInfoBody')
+                $("#addSubModal").modal('hide');
+                notifyMsg(res.msg,res.cls)
+            }
+        });
+    });
+
+    //status-balance//
+    $(document).on('submit', '#statusForm', function (e) {
+        e.preventDefault();
+        let formData = new FormData($('#statusForm')[0]);
+
+        $.ajax({
+            type: "POST",
+            url: "{{route('admin.users.status',$user->id)}}",
+            data: formData,
+            processData: false,
+            dataType: 'json',
+            contentType: false,
+            success: function (res) {
+                console.log(res);
+                $('#statusForm')[0].reset();
+                $('#banUnbanBtn').load(location.href+' #banUnbanBtn')
+                $('#banUnbanBody').load(location.href+' #banUnbanBody')
+                $("#userStatusModal").modal('hide');
+                notifyMsg(res.msg,res.cls)
+            }
+        });
+    });
+
+
+</script>
+
+
 <script>
     (function($){
     "use strict"

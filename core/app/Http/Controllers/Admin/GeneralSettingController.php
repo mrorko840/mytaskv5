@@ -55,8 +55,11 @@ class GeneralSettingController extends Controller
         $timezoneFile = config_path('timezone.php');
         $content = '<?php $timezone = ' . $request->timezone . ' ?>';
         file_put_contents($timezoneFile, $content);
-        $notify[] = ['success', 'General setting updated successfully'];
-        return back()->withNotify($notify);
+
+        // return back()->withNotify($notify);
+        $notify = 'General setting updated successfully';
+        return response()->json(['msg'=>$notify, 'cls'=>'success', 'site_name'=>$general->site_name]);
+
     }
 
     public function systemConfiguration()
@@ -79,8 +82,11 @@ class GeneralSettingController extends Controller
         $general->agree = $request->agree ? 1 : 0;
         $general->balance_transfer = $request->balance_transfer ? 1 : 0;
         $general->save();
-        $notify[] = ['success', 'System configuration updated successfully'];
-        return back()->withNotify($notify);
+        // $notify[] = ['success', 'System configuration updated successfully'];
+        // return back()->withNotify($notify);
+
+        $notify = 'System configuration updated successfully';
+        return response()->json(['msg'=>$notify, 'cls'=>'success']);
     }
 
 
@@ -168,8 +174,11 @@ class GeneralSettingController extends Controller
         ];
         $maintenance->save();
 
-        $notify[] = ['success', 'Maintenance mode updated successfully'];
-        return back()->withNotify($notify);
+        // $notify[] = ['success', 'Maintenance mode updated successfully'];
+        // return back()->withNotify($notify);
+
+        $notify = 'Maintenance mode updated successfully!';
+        return response()->json(['msg'=>$notify, 'cls'=>'success']);
     }
 
     public function cookie()

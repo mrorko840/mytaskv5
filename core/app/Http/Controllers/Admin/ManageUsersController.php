@@ -207,8 +207,11 @@ class ManageUsersController extends Controller
         }
         $user->save();
 
-        $notify[] = ['success', 'User details updated successfully'];
-        return back()->withNotify($notify);
+        // $notify[] = ['success', 'User details updated successfully'];
+        // return back()->withNotify($notify);
+
+        $notify = 'User details updated successfully!';
+        return response()->json(['msg'=>$notify, 'cls'=>'success']);
     }
 
     public function addSubBalance(Request $request, $id)
@@ -228,19 +231,22 @@ class ManageUsersController extends Controller
 
         if ($request->act == 'add') {
             $user->balance += $amount;
-
             $transaction->trx_type = '+';
             $transaction->trx_logo = 'addbal_logo.png';
             $transaction->remark = 'balance_add';
 
             $notifyTemplate = 'BAL_ADD';
 
-            $notify[] = ['success', $general->cur_sym . $amount . ' added successfully'];
+            // $notify[] = ['success', $general->cur_sym . $amount . ' added successfully'];
+            $notify = $general->cur_sym . $amount . ' added successfully';
 
         } else {
             if ($amount > $user->balance) {
                 $notify[] = ['error', $user->username . ' doesn\'t have sufficient balance.'];
                 return back()->withNotify($notify);
+
+                $notify = $user->username . ' doesn\'t have sufficient balance.';
+                return response()->json(['msg'=>$notify, 'cls'=>'error']);
             }
 
             $user->balance -= $amount;
@@ -250,7 +256,8 @@ class ManageUsersController extends Controller
             $transaction->remark = 'balance_subtract';
 
             $notifyTemplate = 'BAL_SUB';
-            $notify[] = ['success', $general->cur_sym . $amount . ' subtracted successfully'];
+            // $notify[] = ['success', $general->cur_sym . $amount . ' subtracted successfully'];
+            $notify = $general->cur_sym . $amount . ' subtracted successfully';
         }
 
         $user->save();
@@ -270,7 +277,8 @@ class ManageUsersController extends Controller
             'post_balance' => showAmount($user->balance)
         ]);
 
-        return back()->withNotify($notify);
+        // return back()->withNotify($notify);
+        return response()->json(['msg'=>$notify, 'cls'=>'success']);
     }
 
     public function login($id){
@@ -287,14 +295,17 @@ class ManageUsersController extends Controller
             ]);
             $user->status = 0;
             $user->ban_reason = $request->reason;
-            $notify[] = ['success','User banned successfully'];
+            // $notify[] = ['success','User banned successfully'];
+            $notify = 'User banned successfully';
         }else{
             $user->status = 1;
             $user->ban_reason = null;
-            $notify[] = ['success','User unbanned successfully'];
+            // $notify[] = ['success','User unbanned successfully'];
+            $notify = 'User unbanned successfully';
         }
         $user->save();
-        return back()->withNotify($notify);
+        // return back()->withNotify($notify);
+        return response()->json(['msg'=>$notify, 'cls'=>'success']);
 
     }
 

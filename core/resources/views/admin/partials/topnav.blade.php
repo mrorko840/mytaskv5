@@ -148,7 +148,7 @@
                 url: "{{ route('admin.ajax.notify') }}",
                 success: function (res) {
                     // console.log(res);
-                    console.log(res.all_admin_notify_count);
+                    // console.log(res.all_admin_notify_count);
                     let noti = res.all_admin_notify_count;
                     $('#ncount').html(res.all_admin_notify_count);
                     if(noti>0){
@@ -164,7 +164,7 @@
                         audio.play();
                         console.log("play");
                     }
-                    console.log(noti);
+                    // console.log(noti);
 
                     //---For Load Table Body---
                     $('#notiMainBody').load(location.href+' #notiMainBody');

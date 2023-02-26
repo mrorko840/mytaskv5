@@ -189,6 +189,7 @@
                     $("#addModalForm")[0].reset();
                     //---For Load Table Body---
                     $('#tableBlock').load(location.href+' #tableBlock');
+                    notifyMsg(res.msg, res.cls)
                 }
             });
         });
@@ -210,27 +211,5 @@
             }
             modal.modal('show');
         });
-
-        // (function($) {
-        //     "use strict";
-        //     $('.planBtn').on('click', function(e) {
-        //         e.preventDefault();
-
-        //         var modal = $('#planModal');
-        //         modal.find('.act').text($(this).data('act'));
-        //         modal.find('input[name=id]').val($(this).data('id'));
-        //         modal.find('input[name=name]').val($(this).data('name'));
-        //         modal.find('input[name=price]').val($(this).data('price'));
-        //         modal.find('input[name=daily_limit]').val($(this).data('daily_limit'));
-        //         modal.find('input[name=ads_rate]').val($(this).data('ads_rate'));
-        //         modal.find('input[name=validity]').val($(this).data('validity'));
-        //         modal.find('input[name=status]').bootstrapToggle($(this).data('status') == 1 ? 'on' : 'off');
-        //         modal.find('select[name=ref_level]').val($(this).data('ref_level'));
-        //         if ($(this).data('id') == 0) {
-        //             modal.find('form')[0].reset();
-        //         }
-        //         modal.modal('show');
-        //     });
-        // })(jQuery);
     </script>
 @endpush

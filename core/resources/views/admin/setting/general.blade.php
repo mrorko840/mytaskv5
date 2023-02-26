@@ -4,7 +4,8 @@
         <div class="col-lg-12 col-md-12 mb-30">
             <div class="card">
                 <div class="card-body">
-                    <form action="" method="POST">
+
+                    <form id="generalForm" action="" method="POST">
                         @csrf
                         <div class="row">
                             <div class="col-md-3 col-sm-6">
@@ -100,6 +101,7 @@
                         </div>
 
                     </form>
+
                 </div>
             </div>
         </div>
@@ -115,6 +117,29 @@
 @endpush
 
 @push('script')
+
+    <script>
+        $(document).on('submit', '#generalForm', function (e) {
+            e.preventDefault();
+            let formData = new FormData($('#generalForm')[0])
+            $.ajax({
+                type: "POST",
+                url: "{{route('admin.setting.update')}}",
+                data: formData,
+                dataType: "json",
+                processData: false,
+                dataType: 'json',
+                contentType: false,
+                success: function (res) {
+                    console.log(res);
+                    $(".pageTitle").html(res.site_name+" - {{$pageTitle}}");;
+                    notifyMsg(res.msg,res.cls)
+                }
+            });
+            
+        });
+    </script>
+
     <script>
         (function ($) {
             "use strict";
