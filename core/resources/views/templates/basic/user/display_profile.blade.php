@@ -23,8 +23,8 @@
             <form id="coverImgForm">
                 <div class="avatar-edit">
                     <input type='file' class="coverPicUpload" id="cover_image" name="cover_image" accept=".png, .jpg, .jpeg" hidden/>
-                    <label style="position: inherit;" class="text-white bg-orange coverEdit" for="cover_image">
-                        <span class="material-icons">photo_camera</span>
+                    <label id="coverPhotoSpin" style="position: inherit;" class="text-white bg-orange coverEdit" for="cover_image">
+                        <span  class="material-icons">photo_camera</span>
                     </label>
                 </div>
             </form>
@@ -550,8 +550,14 @@
 
         });
 
+        //cover-photo Upload//
         $(".coverPicUpload").on('change', function(e) {
             e.preventDefault();
+            $('#coverPhotoSpin').html(`
+                <div class="spinner-border spinner-border-sm mt-1" role="status">
+                    <span class="visually-hidden"></span>
+                </div>
+                `);
             $.ajax({
                 method: "POST",
                 url: "{{route('user.cover.photo')}}",
@@ -561,10 +567,14 @@
                 contentType: false,
                 success: function (res) {
                     console.log(res.msg);
+                    $('#coverPhotoSpin').html(`
+                        <span  class="material-icons">photo_camera</span>
+                    `);
                     notifyMsg(res.msg,res.cls)
                     // $('.loadProfilePhoto').attr('src', "{{route('home')}}/"+res.img);
                     $('.coverPhoto').attr('style', '');
                     $('.coverPhoto').attr('style', "background-image: url('{{route('home')}}/"+res.img+"');");
+
                 }
             });
 
