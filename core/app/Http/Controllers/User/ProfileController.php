@@ -71,6 +71,7 @@ class ProfileController extends Controller
                 unlink($link);
             }
             $image = Image::make($image);
+            $image->resize(1024, 500);
             $image->save($location);
             
             $user->cover_image = $filename;
