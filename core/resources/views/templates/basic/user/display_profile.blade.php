@@ -553,11 +553,11 @@
         //cover-photo Upload//
         $(".coverPicUpload").on('change', function(e) {
             e.preventDefault();
-            $('#coverPhotoSpin').html(`
-                <div class="spinner-border spinner-border-sm mt-1" role="status">
-                    <span class="visually-hidden"></span>
-                </div>
-                `);
+            // $('#coverPhotoSpin').html(`
+            //     <div class="spinner-border spinner-border-sm mt-1" role="status">
+            //         <span class="visually-hidden"></span>
+            //     </div>
+            //     `);
             $.ajax({
                 method: "POST",
                 url: "{{route('user.cover.photo')}}",
@@ -567,11 +567,10 @@
                 contentType: false,
                 success: function (res) {
                     console.log(res.msg);
-                    $('#coverPhotoSpin').html(`
-                        <span  class="material-icons">photo_camera</span>
-                    `);
-                    notifyMsg(res.msg,res.cls)
-                    // $('.loadProfilePhoto').attr('src', "{{route('home')}}/"+res.img);
+                    // $('#coverPhotoSpin').html(`
+                    //     <span  class="material-icons">photo_camera</span>
+                    // `);
+                    notifyMsg(res.msg,res.cls);
                     $('.coverPhoto').attr('style', '');
                     $('.coverPhoto').attr('style', "background-image: url('{{route('home')}}/"+res.img+"');");
 
