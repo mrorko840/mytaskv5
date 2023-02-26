@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
 
-    protected $fillable = ['image','firstname','lastname','state','zip','city','address','country'];
+    protected $fillable = ['image', 'cover_image','firstname','lastname','state','zip','city','address','country'];
 
     /**
      * The attributes that should be hidden for arrays.

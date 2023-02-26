@@ -60,11 +60,21 @@ class ProfileController extends Controller
     }
 
     public function AjaxCoverPhoto(Request $request){
+        $request->validate([
+            'cover_image' => 'required|image',
+            
+        ],[
+            'cover_image.required'=>'Image Field is required',
+            'cover_image.image'=>'It must be an Image'
+        ]);
+
         $user = Auth::user();
         if($request->hasFile('cover_image')){
             $image = $request->file('cover_image');
-            $filename = time().'_cover_'.$user->username.'.png';
-            $location = 'assets/images/user/cover/' . $filename;
+            $filename = rand(10000000,40000000) . '_' . $user->username.'.png';
+            $location = 'assets/images/user/cover/'.$filename;
+            $in['image'] = $filename;
+
             $path = './assets/images/user/cover/';
             $link = $path . $user->cover_image;
             if ($user->cover_image!=null){
@@ -76,7 +86,8 @@ class ProfileController extends Controller
             
             $user->cover_image = $filename;
         }
-        $user->save();
+        // $user->save();
+        $user->fill($in)->save();
 
         $cls = 'success';
         $notify = 'Cover Picture Upload Successfully!';
