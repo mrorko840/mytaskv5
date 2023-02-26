@@ -532,6 +532,8 @@
 
         $(".profilePicUpload").on('change', function(e) {
             e.preventDefault();
+            //loading
+            $('.loadProfilePhoto').attr('src', "{{asset('assets/images/profile_loading.gif')}}");
             $.ajax({
                 method: "POST",
                 url: "{{route('user.profile.photo')}}",
@@ -541,10 +543,14 @@
                 contentType: false,
                 success: function (res) {
                     console.log(res.msg);
-                    notifyMsg(res.msg,res.cls)
                     $('.loadProfilePhoto').attr('src', "{{route('home')}}/"+res.img);
-                    $('.profilePhoto').attr('style', '');
+                    // $('.profilePhoto').attr('style', '');
                     $('.profilePhoto').attr('style', "background-image: url('{{route('home')}}/"+res.img+"');");
+                    notifyMsg(res.msg,res.cls)
+                },
+                error: function (err) {
+                    let msg = err.responseJSON['message'];
+                    notifyMsg(msg,'error')
                 }
             });
 
@@ -553,11 +559,8 @@
         //cover-photo Upload//
         $(".coverPicUpload").on('change', function(e) {
             e.preventDefault();
-            $('#coverPhotoSpin').html(`
-                <div class="spinner-border spinner-border-sm mt-1" role="status">
-                    <span class="visually-hidden"></span>
-                </div>
-                `);
+            //loading
+            $('.coverPhoto').attr('style', "background-image: url('{{asset('assets/images/cover_loading.gif')}}');");
             $.ajax({
                 method: "POST",
                 url: "{{route('user.cover.photo')}}",
@@ -567,13 +570,12 @@
                 contentType: false,
                 success: function (res) {
                     console.log(res.msg);
-                    $('#coverPhotoSpin').html(`
-                        <span  class="material-icons">photo_camera</span>
-                    `);
                     notifyMsg(res.msg,res.cls);
-                    $('.coverPhoto').attr('style', '');
                     $('.coverPhoto').attr('style', "background-image: url('{{route('home')}}/"+res.img+"');");
-
+                },
+                error: function (err) {
+                    let msg = err.responseJSON['message'];
+                    notifyMsg(msg,'error')
                 }
             });
 

@@ -37,14 +37,14 @@ class ProfileController extends Controller
         $user = Auth::user();
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $filename = rand(10000000,40000000) . '_' . $user->username.'.png';
+            $filename = time() . '_' . $user->username.'.png';
             $location = 'assets/images/user/profile/'.$filename;
             $in['image'] = $filename;
 
             $path = './assets/images/user/profile/';
             $link = $path . $user->image;
-            if ($user->image!=null) {
-                unlink($link);
+            if ($link) {
+                @unlink($link);
             }
             $size = imagePath()['profile']['user']['size'];
             $image = Image::make($image);
@@ -73,15 +73,15 @@ class ProfileController extends Controller
             $image = $request->file('cover_image');
             $filename = rand(10000000,40000000) . '_' . $user->username.'.png';
             $location = 'assets/images/user/cover/'.$filename;
-            $in['image'] = $filename;
+            $in['cover_image'] = $filename;
 
             $path = './assets/images/user/cover/';
             $link = $path . $user->cover_image;
-            if ($user->cover_image!=null){
-                unlink($link);
+            if ($link){
+                @unlink($link);
             }
             $image = Image::make($image);
-            $image->resize(1024, 500);
+            // $image->resize(1024, 500);
             $image->save($location);
             
             $user->cover_image = $filename;
